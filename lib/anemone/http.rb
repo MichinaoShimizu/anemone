@@ -144,8 +144,8 @@ module Anemone
       rescue Timeout::Error, Net::HTTPBadResponse, EOFError => e
         puts e.inspect if verbose?
         refresh_connection(url)
-        retries += 1
-        retry unless retries > 3
+#        retries += 1
+#        retry unless retries > 3
       end
     end
 
