@@ -72,22 +72,23 @@ module Anemone
     #
     # Nokogiri document for the HTML body
     #
-    def doc
-      return @doc if @doc
-      if @body && html?
-        if charset == 'utf-8' || charset.nil?
-          body = @body
-        else
-          body = @body.encode(
-            "UTF-8", charset, :invalid => :replace,
-            :undef => :replace) rescue nil
-            )
-        end
-        @doc = Nokogiri::HTML(body) if body
-      end
-      #@doc = Nokogiri::HTML(@body) if @body && html? rescue nil
-    end
-
+def doc
+  return @doc if @doc
+  if @body && html?
+if charset == 'utf-8' || charset.nil?
+  body = @body
+else
+  body = @body.encode("UTF-8", charset, :invalid => :replace, :undef => :replace) rescue nil
+end
+@doc = Nokogiri::HTML(body) if body
+  end
+end
+    
+def charset
+  matcher = content_type.match(/charset=[\"]?([a-zA-Z\_\-\d]*)[\"]?/)
+  matcher[1].downcase if matcher
+end
+    
     #
     # Delete the Nokogiri document and response body to conserve memory
     #
