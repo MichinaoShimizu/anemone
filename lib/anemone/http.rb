@@ -144,8 +144,8 @@ module Anemone
       rescue Timeout::Error, Net::HTTPBadResponse, EOFError => e
         puts e.inspect if verbose?
         refresh_connection(url)
-#        retries += 1
-#        retry unless retries > 3
+        retries += 1
+        retry unless retries > 3
       end
     end
 
@@ -161,7 +161,7 @@ module Anemone
 
     def refresh_connection(url)
       http = Net::HTTP.new(url.host, url.port, proxy_host, proxy_port)
-
+      http.open_timeout = 5
       http.read_timeout = read_timeout if !!read_timeout
 
       if url.scheme == 'https'
